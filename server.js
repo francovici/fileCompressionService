@@ -27,7 +27,7 @@ const checkJwt = jwt.expressjwt({
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.use(checkJwt);
+//app.use(checkJwt);
 
 routes(app);
 app.use(bodyParser.json({ type: 'application/*+json'}));
