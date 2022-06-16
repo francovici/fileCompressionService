@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./api/routes');
 const morganBody = require('morgan-body');
-const dotenv = require('dotenv');
 const fileUpload = require("express-fileupload");
 const { rmSync, existsSync } = require('fs');
 const path = require('path');
@@ -11,7 +10,10 @@ const path = require('path');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 
-dotenv.config();
+
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 const fileInFolder = './files/in';
 const fileOutFolder = './files/out';
