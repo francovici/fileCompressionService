@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "local": "nodemon",
-    "start": "node ./dist/fileCompressionService/server.js",
+    "startlocal": "node ./dist/fileCompressionService/server.js",
+    "start": "node server.js",
     "test": "mocha --require ts-node/register test/**/**",
     "build": "npx cpx --clean ./package.json ./dist/fileCompressionService && npx tsc --project ./",
     "lint": "eslint ."

@@ -4,13 +4,25 @@ const routes = require('./api/routes');
 const morganBody = require('morgan-body');
 const dotenv = require('dotenv');
 const fileUpload = require("express-fileupload");
+const { rmSync, existsSync } = require('fs');
+const path = require('path');
 
 //Auth0
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
-const path = require('path');
 
 dotenv.config();
+
+const fileInFolder = './files/in';
+const fileOutFolder = './files/out';
+
+//Cleanup output dirs
+if(existsSync(path.resolve(fileInFolder)))
+    rmSync(path.resolve(fileInFolder),{recursive:true});
+
+if(existsSync(path.resolve(fileOutFolder)))
+    rmSync(path.resolve(fileOutFolder),{recursive:true});
+
 
 const checkJwt = jwt.expressjwt({
     secret: jwksRsa.expressJwtSecret({
@@ -29,23 +41,26 @@ const checkJwt = jwt.expressjwt({
 
 const app = express();
 const port = process.env.PORT || 3000;
-//app.use(checkJwt);
+
+app.use(checkJwt);
+
+const maxFileSize = typeof process.env.MAX_FILE_SIZE === 'number' ? process.env.MAX_FILE_SIZE : 6;
+
 app.use(fileUpload({
     limits: {
-        fileSize: 6 * 1024 * 1024 // 6 MB
+        fileSize: maxFileSize * 1024 * 1024 
     },
     createParentPath:true,
     abortOnLimit: true,
-    responseOnLimit:'El archivo no puede superar los 6 MB',
+    responseOnLimit:`File cannot exceed ${maxFileSize} MB`,
     useTempFiles:true,
     tempFileDir: path.resolve('./tmp')
 }));
-routes(app);
 
-//app.use(bodyParser.json({ type: 'application/*+json'}));
+routes(app);
 morganBody(app);
 app.server = app.listen(port, () => {
-    console.log(`Listening to port http://localhost:${port}`);
+    console.log(`Listening on port http://localhost:${port}`);
 });
 
 module.exports = app;
