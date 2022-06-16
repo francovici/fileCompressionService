@@ -30,7 +30,7 @@ const port = process.env.PORT || 3000;
 //app.use(checkJwt);
 
 routes(app);
-app.use(bodyParser.json({ type: 'application/*+json'}));
+//app.use(bodyParser.json({ type: 'application/*+json'}));
 morganBody(app);
 app.server = app.listen(port, () => {
     console.log(`Listening to port http://localhost:${port}`);
