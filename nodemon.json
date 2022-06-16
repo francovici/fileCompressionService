@@ -1,6 +1,6 @@
   {
     "verbose": true,
-    "ignore": ["*.test.js","./node_modules/*", ".dist/*"],
+    "ignore": ["*.test.js","./node_modules/*", ".dist/*","./tmp/*","./files/*","./files/in/*","./files/out/*"],
     "execMap": {
       "js": "npx ts-node"
     },
