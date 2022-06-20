@@ -44,8 +44,12 @@ const checkJwt = jwt.expressjwt({
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(checkJwt);
+const testingEnvironment = process.env.NODE_ENV;
 
+//Only use Auth middleware when not running tests:
+if(testingEnvironment != 'TEST') {
+    app.use(checkJwt);
+}
 const maxFileSize = typeof process.env.MAX_FILE_SIZE === 'number' ? process.env.MAX_FILE_SIZE : 6;
 
 app.use(fileUpload({
