@@ -4,7 +4,7 @@ import {zip} from 'compressing';
 import { UploadedFile } from "express-fileupload";
 import * as path from 'path';
 
-const controller = (req : Request, res : Response) => {
+export const controller = (req : Request, res : Response) => {
     
     console.log('--- Incoming File ---')
     console.log(req.files?.archivo);    
