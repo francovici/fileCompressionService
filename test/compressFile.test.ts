@@ -1,33 +1,20 @@
 process.env.NODE_ENV = 'TEST';
-console.log(process.env.NODE_ENV);
 
 import { describe, it } from "mocha";
-import app from "../server";
+import {app} from "../server";
 import request from "supertest";
 import { readFileSync, writeFileSync } from "fs";
 import { NextFunction } from "express";
 import path from "path";
+import { expect } from "chai";
 
-describe('compress File Tests',() => {
-    /* it('Should return error if file is too big',()=>{
-        request(app)
-            .post('/compressFile')
-            .set('Content-Type','multipart/form-data')
-            .expect(200, function(err, res) {
-                if (err) { return done(err); }
-                callStatus = res.body.goodCall;
-                expect(callStatus).to.equal(true);
-                // Done
-                done();
-              });
-    }); */
-
+describe('Running fileCompressor tests...',() => {
     it('Should return the compressed file',(done : NextFunction)=>{
         
         request(app)
             .post('/api/fileCompression/compressFile')
             .set('Content-Type','multipart/form-data')
-            .attach('archivo',readFileSync(path.resolve('./assets/big-wallpaper.jpg')),{filename:'big-wallpaper.jpg'})
+            .attach('archivo',readFileSync(path.resolve('./test-files/big-wallpaper.jpg')),{filename:'big-wallpaper.jpg'})
             .expect('Content-Type','application/octet-stream')
             .expect(200, function(err, res) {
                 if (err) { return done(err); }
@@ -36,18 +23,19 @@ describe('compress File Tests',() => {
                 done();
               });
     });
-
-    //Test unauthorized
-    it('Should return unauthorized',(done : NextFunction)=>{
-        //Changing node_env to enable authorization middleware :
-        process.env.NODE_ENV = 'DEV';
+ 
+    it('Should return error if file is too big',(done)=>{
+        
         request(app)
             .post('/api/fileCompression/compressFile')
             .set('Content-Type','multipart/form-data')
-            .attach('archivo',readFileSync(path.resolve('./assets/big-wallpaper.jpg')),{filename:'big-wallpaper.jpg'})
-            .expect('Content-Type','application/html')
-            .expect(401,()=>{
+            .attach('archivo',readFileSync(path.resolve('./test-files/matrix.gif')),{filename:'big-wallpaper.jpg'})
+            .expect(413, (err,res) => {
+                expect(res.status).to.equal(413);
                 done();
-            });
+              });
     });
+
+    
+    
 });

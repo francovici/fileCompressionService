@@ -17,6 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const fileInFolder = './files/in';
 const fileOutFolder = './files/out';
+const tempFolder = './tmp';
 
 //Cleanup output dirs
 if(existsSync(path.resolve(fileInFolder)))
@@ -25,6 +26,8 @@ if(existsSync(path.resolve(fileInFolder)))
 if(existsSync(path.resolve(fileOutFolder)))
     rmSync(path.resolve(fileOutFolder),{recursive:true});
 
+if(existsSync(path.resolve(tempFolder)))
+    rmSync(path.resolve(tempFolder),{recursive:true});
 
 const checkJwt = jwt.expressjwt({
     secret: jwksRsa.expressJwtSecret({
@@ -50,9 +53,9 @@ const testingEnvironment = process.env.NODE_ENV;
 if(testingEnvironment != 'TEST') {
     app.use(checkJwt);
 }
-const maxFileSize = typeof process.env.MAX_FILE_SIZE === 'number' ? process.env.MAX_FILE_SIZE : 6;
+const maxFileSize = process.env.MAX_FILE_SIZE ? process.env.MAX_FILE_SIZE : 6;
 
-app.use(fileUpload({
+const fileUploadMiddleware = fileUpload({
     limits: {
         fileSize: maxFileSize * 1024 * 1024 
     },
@@ -61,7 +64,9 @@ app.use(fileUpload({
     responseOnLimit:`File cannot exceed ${maxFileSize} MB`,
     useTempFiles:true,
     tempFileDir: path.resolve('./tmp')
-}));
+});
+
+app.use(fileUploadMiddleware);
 
 routes(app);
 morganBody(app);
@@ -69,4 +74,4 @@ app.server = app.listen(port, () => {
     console.log(`Listening on port http://localhost:${port}`);
 });
 
-module.exports = app;
+module.exports = {app,checkJwt};
