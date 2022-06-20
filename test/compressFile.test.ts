@@ -38,5 +38,16 @@ describe('compress File Tests',() => {
     });
 
     //Test unauthorized
-    
+    it('Should return unauthorized',(done : NextFunction)=>{
+        //Changing node_env to enable authorization middleware :
+        process.env.NODE_ENV = 'DEV';
+        request(app)
+            .post('/api/fileCompression/compressFile')
+            .set('Content-Type','multipart/form-data')
+            .attach('archivo',readFileSync(path.resolve('./assets/big-wallpaper.jpg')),{filename:'big-wallpaper.jpg'})
+            .expect('Content-Type','application/html')
+            .expect(401,()=>{
+                done();
+            });
+    });
 });
