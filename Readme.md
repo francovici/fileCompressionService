@@ -4,9 +4,9 @@ Microservicio Node.js escrito en Typescript.
 
 Permite la compresión y encriptación de archivos.
 
-## Índice
-[Estructura del proyecto](#estructura-del-proyecto)
+Utiliza autenticación con Auth0
 
+## Índice
 [Dependencias](#dependencias)
 
 [Comandos](#comandos-npm)
@@ -46,38 +46,24 @@ Realizar tests unitarios.
 
 Web framework para crear API REST.
 
+`express-fileupload`
+
+Librería para la subida de archivos a Express.
+
+`compressing`
+
+Librería para compresión de archivos.
+
 `morgan-body`
 
 Para loggear el body de las requests y responses.
 
+`jwks-rsa, express-jwt`
 
-<br><br>
+Para autenticación.
 
-## Estructura del proyecto
-#
-La estructura sugerida del proyecto es la siguiente
 
-- api/
-    - dto/
-        - ... : _directorio donde incluir interfaces TS para requests y responses. (Data Transfer Objects)._
-    - model/
-        - ... : _directorio donde incluir clases TS referidas al modelo de datos._
-    - routes.js : _módulo donde se definen los endpoints._
-- dist/
-    - <$npm_package_name> : _directorio output para el build del proyecto._
-- environments/
-    - environments.ts
-    - ... : _definición de variables de entorno. Crear un archivo para cada ambiente_
-- test _directorio utilizado por mocha para ejecutar tests unitarios._
-- .eslintrc.json : _archivo para opciones de linting del Typescript_
-- .gitignore
-- nodemon.json : _configuración nodemon para escuchar cambios durante el desarrollo_
-- package.json
-- Readme.md
-- server.js
-- tsconfig.json : _configuraciones de compilación de typescript_
-
-<br><br>
+<br>
 
 ## Comandos NPM 
 #
