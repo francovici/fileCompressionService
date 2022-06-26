@@ -1,0 +1,15 @@
+  {
+    "verbose": true,
+    "ignore": ["*.test.js,*.test.ts",
+      "./node_modules/*",
+      ".dist/*",
+      "./tmp/*",
+      "./files/*",
+      "./files/in/*",
+      "./files/out/*"],
+    "execMap": {
+      "js": "npx ts-node"
+    },
+    "ext": "ts,js,json",
+    "exec": "npx ts-node server.js"
+  }
