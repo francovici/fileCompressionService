@@ -2,7 +2,7 @@
 
 Microservicio Node.js escrito en Typescript.
 
-Permite la compresión y encriptación de archivos.
+Permite la compresión de archivos.
 
 Utiliza autenticación con Auth0
 
