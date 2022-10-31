@@ -14,7 +14,7 @@ describe('Running fileCompressor tests...',() => {
         request(app)
             .post('/api/fileCompression/compressFile')
             .set('Content-Type','multipart/form-data')
-            .attach('archivo',readFileSync(path.resolve('./test-files/big2-wallpaper.jpg')),{filename:'big2-wallpaper.jpg'})
+            .attach('archivo',readFileSync(path.resolve('./test-files/big-wallpaper.jpg')),{filename:'big-wallpaper.jpg'})
             .expect('Content-Type','application/octet-stream')
             .expect(200, function(err, res) {
                 if (err) { return done(err); }
