@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'DEV';
+/* process.env.NODE_ENV = 'DEV';
 
 import { describe, it } from "mocha";
 import { app,checkJwt } from "../server";
@@ -26,4 +26,4 @@ describe('Running authorization tests...',() => {
                 done();
             });
     });
-});
+}); */
